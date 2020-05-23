@@ -4,7 +4,7 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 // Global Variables
-let list = document.getElementsByClassName('student-item');
+let globalListOfStudents = document.getElementsByClassName('student-item');
 
 // HELPERS
 
@@ -33,16 +33,23 @@ function removeAllClasses(list) {
 // AppendPageLinks to document
 
 function appendPageLinks(list) {
+  // If existing pages exist, delete them
+  const existingDiv = document.querySelector('.pagintion');
+  if (existingDiv) {
+    existingDiv.parentNode.removeChild(existingDiv);
+  }
+
   const pageCount = Math.floor(list.length / 10) + 1; // Generate number of pages
 
-  const newDiv = document.createElement('div'); // Generate and append .pagination DIV
+  const newDiv = document.createElement('div'); // Generate .pagination DIV - Append to .page DIV
   newDiv.className = 'pagination';
   document.querySelector('.page').appendChild(newDiv);
 
-  const newUl = document.createElement('ul'); // Generate and append .pageList UL
+  const newUl = document.createElement('ul'); // Generate .pageList UL - Append to .pagination DIV
   newUl.className = 'pageList';
   document.querySelector('.pagination').appendChild(newUl);
 
+  // Generate <li><a> tags - Append to .pageList UL
   for (i = 0; i < pageCount; i++) {
     let newListItem = document.createElement('li');
     let newAnchorTag = document.createElement('a');
@@ -52,9 +59,9 @@ function appendPageLinks(list) {
     document.querySelector('.pageList').appendChild(newListItem);
   }
 
-  const allLinks = document.querySelectorAll('a');
-
+  // Pagination fucntionality
   newUl.addEventListener('click', function (e) {
+    const allLinks = document.querySelectorAll('a');
     removeAllClasses(allLinks);
     allLinks[e.target.innerText - 1].className = 'active';
     showPage(list, e.target.innerText - 1);
@@ -76,12 +83,10 @@ function appendSearch() {
   document.querySelector('.page-header').appendChild(searchDiv);
 
   // Functionality
-
   document.querySelector('input').addEventListener('keyup', function (e) {
     let input = e.target;
     let filter = input.value.toUpperCase();
     let listLi = document.querySelectorAll('.student-item');
-    console.log(listLi);
     for (i = 0; i < listLi.length; i++) {
       let li = listLi[i];
       let name = listLi[i].getElementsByTagName('h3')[0];
@@ -89,16 +94,21 @@ function appendSearch() {
 
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         li.style.display = '';
-        li.className = 'student-item cf selected';
+        li.className = 'student-item cf selected"';
       } else {
         li.style.display = 'none';
-        li.className = 'student-item cf';
+        li.className = 'student-item cf"';
       }
     }
+
+    let arr = document.querySelectorAll('.selected');
+    appendPageLinks(arr);
   });
 }
 
-addSelected(list);
-showPage(list, 0);
-appendPageLinks(list);
+addSelected(globalListOfStudents);
+
+showPage(globalListOfStudents, 0);
+
+appendPageLinks(globalListOfStudents);
 appendSearch();
