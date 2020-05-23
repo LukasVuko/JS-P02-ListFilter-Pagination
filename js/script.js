@@ -6,6 +6,12 @@ FSJS project 2 - List Filter and Pagination
 // HELPERS
 const list = document.getElementsByClassName('student-item');
 
+function addSelected() {
+  for (i = 0; i < list.length; i++) {
+    list[i].className = 'student-item cf selected';
+  }
+}
+
 function showPage(list, page) {
   for (i = 0; i < list.length; i++) {
     if (i >= page * 10 && i <= page * 10 + 9) {
@@ -73,11 +79,12 @@ function appendSearch() {
     let input = e.target;
     let filter = input.value.toUpperCase();
     let listLi = document.querySelectorAll('.student-item');
-
+    console.log(listLi);
     for (i = 0; i < listLi.length; i++) {
       let li = listLi[i];
       let name = listLi[i].getElementsByTagName('h3')[0];
       let txtValue = name.textContent || name.innerText;
+
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         li.style.display = '';
       } else {
@@ -87,6 +94,7 @@ function appendSearch() {
   });
 }
 
-showPage(list, 1);
+addSelected();
+showPage(list, 0);
 appendPageLinks(list);
 appendSearch();
