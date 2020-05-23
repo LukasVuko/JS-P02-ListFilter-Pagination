@@ -34,7 +34,7 @@ function removeAllClasses(list) {
 
 function appendPageLinks(list) {
   // If existing pages exist, delete them
-  const existingDiv = document.querySelector('.pagintion');
+  const existingDiv = document.querySelector('.pagination');
   if (existingDiv) {
     existingDiv.parentNode.removeChild(existingDiv);
   }
@@ -101,8 +101,9 @@ function appendSearch() {
       }
     }
 
-    let arr = document.querySelectorAll('.selected');
-    appendPageLinks(arr);
+    const test = document.getElementsByClassName('selected');
+    console.log(test);
+    // appendPageLinks(arr);
   });
 }
 
