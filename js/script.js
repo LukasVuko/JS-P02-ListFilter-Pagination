@@ -1,14 +1,18 @@
 /******************************************
-Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
-// Global Variables
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Global Variables ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 let globalListOfStudentsOnLoad = document.getElementsByClassName(
   'student-item'
 );
 
-// HELPERS
+/* ~~~~~~~~~~~~~~~~~ */
+/* ~~~~ HELPERS ~~~~ */
+/* ~~~~~~~~~~~~~~~~~ */
 
 function addSelected(list) {
   for (i = 0; i < list.length; i++) {
@@ -32,27 +36,31 @@ function removeAllClasses(list) {
   }
 }
 
-// AppendPageLinks to document
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ MAIN FUNCTION #1 - Append page links to the DOM ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 function appendPageLinks(list) {
-  // If existing pages exist, delete them
+  // If a pagination div exists already, remove it from the document
   const existingDiv = document.querySelector('.pagination');
   if (existingDiv) {
     existingDiv.parentNode.removeChild(existingDiv);
   }
 
+  // If the array served to the function is empty, display a NO RESULTS notification
+  // ELSE execute the rest of the function
   if (list.length === 0) {
     let h1 = document.createElement('h1');
     h1.className = 'noResults';
     h1.innerText = 'No results were found!';
     document.querySelector('.page').appendChild(h1);
   } else {
-    const h1 = document.querySelector('.noResults');
+    const h1 = document.querySelector('.noResults'); // If an H1 exists (No results notification) remove it from the DOM
     if (h1) {
       h1.parentNode.removeChild(h1);
     }
 
-    const pageCount = Math.floor(list.length / 10) + 1; // Generate number of pages
+    const pageCount = Math.floor(list.length / 10) + 1; // Calculate the total number of pages
 
     const newDiv = document.createElement('div'); // Generate .pagination DIV - Append to .page DIV
     newDiv.className = 'pagination';
@@ -71,9 +79,10 @@ function appendPageLinks(list) {
       newListItem.appendChild(newAnchorTag);
       document.querySelector('.pageList').appendChild(newListItem);
     }
-    showPage(list, 0);
 
-    // Pagination fucntionality
+    showPage(list, 0); // Show only students from page 1
+
+    // Add event listeners to pagination links
     newUl.addEventListener('click', function (e) {
       const allLinks = document.querySelectorAll('a');
       removeAllClasses(allLinks);
@@ -82,6 +91,10 @@ function appendPageLinks(list) {
     });
   }
 }
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ MAIN FUNCTION #2 - Append search functionaity to the DOM ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 function appendSearch() {
   // Generate Search HTML
@@ -97,7 +110,7 @@ function appendSearch() {
   // Append Search HTML
   document.querySelector('.page-header').appendChild(searchDiv);
 
-  // Functionality
+  // Add event listener to search field
   document.querySelector('input').addEventListener('keyup', function (e) {
     let input = e.target;
     let filter = input.value.toUpperCase();
@@ -121,6 +134,9 @@ function appendSearch() {
   });
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ CODE EXECUTION ON LOAD ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 addSelected(globalListOfStudentsOnLoad);
 showPage(globalListOfStudentsOnLoad, 0);
 appendPageLinks(globalListOfStudentsOnLoad);
