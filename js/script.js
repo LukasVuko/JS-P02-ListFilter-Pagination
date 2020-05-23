@@ -3,10 +3,12 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
-// HELPERS
-const list = document.getElementsByClassName('student-item');
+// Global Variables
+let list = document.getElementsByClassName('student-item');
 
-function addSelected() {
+// HELPERS
+
+function addSelected(list) {
   for (i = 0; i < list.length; i++) {
     list[i].className = 'student-item cf selected';
   }
@@ -96,7 +98,7 @@ function appendSearch() {
   });
 }
 
-addSelected();
+addSelected(list);
 showPage(list, 0);
 appendPageLinks(list);
 appendSearch();
