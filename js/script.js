@@ -3,9 +3,8 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
-const list = document.getElementsByClassName('student-item');
-
 // HELPERS
+const list = document.getElementsByClassName('student-item');
 
 function showPage(list, page) {
   for (i = 0; i < list.length; i++) {
@@ -23,10 +22,10 @@ function removeAllClasses(list) {
   }
 }
 
-// Create the `appendPageLinks function` to generate, append, and add functionality to the pagination buttons.
+// AppendPageLinks to document
 
 function appendPageLinks(list) {
-  const pageCount = Math.floor(list.length / 10) + 1;
+  const pageCount = Math.floor(list.length / 10) + 1; // Generate number of pages
 
   const newDiv = document.createElement('div'); // Generate and append .pagination DIV
   newDiv.className = 'pagination';
@@ -54,5 +53,40 @@ function appendPageLinks(list) {
   });
 }
 
+function appendSearch() {
+  // Generate Search HTML
+  let searchDiv = document.createElement('div');
+  searchDiv.className = 'student-search';
+  let input = document.createElement('input');
+  input.placeholder = 'Search for students...';
+  let button = document.createElement('button');
+  button.innerText = 'Search';
+  searchDiv.appendChild(input);
+  searchDiv.appendChild(button);
+
+  // Append Search HTML
+  document.querySelector('.page-header').appendChild(searchDiv);
+
+  // Functionality
+
+  document.querySelector('input').addEventListener('keyup', function (e) {
+    let input = e.target;
+    let filter = input.value.toUpperCase();
+    let listLi = document.querySelectorAll('.student-item');
+
+    for (i = 0; i < listLi.length; i++) {
+      let li = listLi[i];
+      let name = listLi[i].getElementsByTagName('h3')[0];
+      let txtValue = name.textContent || name.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li.style.display = '';
+      } else {
+        li.style.display = 'none';
+      }
+    }
+  });
+}
+
 showPage(list, 1);
 appendPageLinks(list);
+appendSearch();
