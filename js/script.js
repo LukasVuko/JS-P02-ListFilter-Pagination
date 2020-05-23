@@ -78,7 +78,7 @@ function appendSearch() {
   document.querySelector('input').addEventListener('keyup', function (e) {
     let input = e.target;
     let filter = input.value.toUpperCase();
-    let listLi = document.querySelectorAll('.selected');
+    let listLi = document.querySelectorAll('.student-item');
     console.log(listLi);
     for (i = 0; i < listLi.length; i++) {
       let li = listLi[i];
@@ -87,8 +87,10 @@ function appendSearch() {
 
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         li.style.display = '';
+        li.className = 'student-item cf selected';
       } else {
         li.style.display = 'none';
+        li.className = 'student-item cf';
       }
     }
   });
