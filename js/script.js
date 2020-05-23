@@ -41,35 +41,46 @@ function appendPageLinks(list) {
     existingDiv.parentNode.removeChild(existingDiv);
   }
 
-  const pageCount = Math.floor(list.length / 10) + 1; // Generate number of pages
+  if (list.length === 0) {
+    let h1 = document.createElement('h1');
+    h1.className = 'noResults';
+    h1.innerText = 'No results were found!';
+    document.querySelector('.page').appendChild(h1);
+  } else {
+    const h1 = document.querySelector('.noResults');
+    if (h1) {
+      h1.parentNode.removeChild(h1);
+    }
 
-  const newDiv = document.createElement('div'); // Generate .pagination DIV - Append to .page DIV
-  newDiv.className = 'pagination';
-  document.querySelector('.page').appendChild(newDiv);
+    const pageCount = Math.floor(list.length / 10) + 1; // Generate number of pages
 
-  const newUl = document.createElement('ul'); // Generate .pageList UL - Append to .pagination DIV
-  newUl.className = 'pageList';
-  document.querySelector('.pagination').appendChild(newUl);
+    const newDiv = document.createElement('div'); // Generate .pagination DIV - Append to .page DIV
+    newDiv.className = 'pagination';
+    document.querySelector('.page').appendChild(newDiv);
 
-  // Generate <li><a> tags - Append to .pageList UL
-  for (i = 0; i < pageCount; i++) {
-    let newListItem = document.createElement('li');
-    let newAnchorTag = document.createElement('a');
-    newAnchorTag.href = '#';
-    newAnchorTag.innerText = i + 1;
-    newListItem.appendChild(newAnchorTag);
-    document.querySelector('.pageList').appendChild(newListItem);
+    const newUl = document.createElement('ul'); // Generate .pageList UL - Append to .pagination DIV
+    newUl.className = 'pageList';
+    document.querySelector('.pagination').appendChild(newUl);
+
+    // Generate <li><a> tags - Append to .pageList UL
+    for (i = 0; i < pageCount; i++) {
+      let newListItem = document.createElement('li');
+      let newAnchorTag = document.createElement('a');
+      newAnchorTag.href = '#';
+      newAnchorTag.innerText = i + 1;
+      newListItem.appendChild(newAnchorTag);
+      document.querySelector('.pageList').appendChild(newListItem);
+    }
+    showPage(list, 0);
+
+    // Pagination fucntionality
+    newUl.addEventListener('click', function (e) {
+      const allLinks = document.querySelectorAll('a');
+      removeAllClasses(allLinks);
+      allLinks[e.target.innerText - 1].className = 'active';
+      showPage(list, e.target.innerText - 1);
+    });
   }
-
-  showPage(list, 0);
-
-  // Pagination fucntionality
-  newUl.addEventListener('click', function (e) {
-    const allLinks = document.querySelectorAll('a');
-    removeAllClasses(allLinks);
-    allLinks[e.target.innerText - 1].className = 'active';
-    showPage(list, e.target.innerText - 1);
-  });
 }
 
 function appendSearch() {
@@ -101,7 +112,7 @@ function appendSearch() {
         li.className = 'student-item cf selected';
       } else {
         li.style.display = 'none';
-        li.className = 'student-item cf"';
+        li.className = 'student-item cf';
       }
     }
 
