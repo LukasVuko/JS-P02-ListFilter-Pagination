@@ -4,7 +4,9 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 // Global Variables
-let globalListOfStudents = document.getElementsByClassName('student-item');
+let globalListOfStudentsOnLoad = document.getElementsByClassName(
+  'student-item'
+);
 
 // HELPERS
 
@@ -59,6 +61,8 @@ function appendPageLinks(list) {
     document.querySelector('.pageList').appendChild(newListItem);
   }
 
+  showPage(list, 0);
+
   // Pagination fucntionality
   newUl.addEventListener('click', function (e) {
     const allLinks = document.querySelectorAll('a');
@@ -94,22 +98,19 @@ function appendSearch() {
 
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         li.style.display = '';
-        li.className = 'student-item cf selected"';
+        li.className = 'student-item cf selected';
       } else {
         li.style.display = 'none';
         li.className = 'student-item cf"';
       }
     }
 
-    const test = document.getElementsByClassName('selected');
-    console.log(test);
-    // appendPageLinks(arr);
+    const arr = document.getElementsByClassName('selected');
+    appendPageLinks(arr);
   });
 }
 
-addSelected(globalListOfStudents);
-
-showPage(globalListOfStudents, 0);
-
-appendPageLinks(globalListOfStudents);
+addSelected(globalListOfStudentsOnLoad);
+showPage(globalListOfStudentsOnLoad, 0);
+appendPageLinks(globalListOfStudentsOnLoad);
 appendSearch();
