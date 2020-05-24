@@ -59,6 +59,7 @@ function appendPageLinks(list) {
   // ELSE execute the rest of the function
   if (list.length === 0) {
     document.querySelector('h1').style.display = '';
+    document.querySelector('.pagination').style.display = '';
   } else {
     document.querySelector('h1').style.display = 'none';
   }
