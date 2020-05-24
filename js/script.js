@@ -58,9 +58,9 @@ function appendPageLinks(list) {
   // If the array served to the function is empty, display a NO RESULTS notification
   // ELSE execute the rest of the function
   if (list.length === 0) {
-    document.querySelector('h1').style.display = '';
+    document.getElementsByClassName('noResults')[0].style.display = '';
   } else {
-    document.querySelector('h1').style.display = 'none';
+    document.getElementsByClassName('noResults')[0].style.display = 'none';
   }
 
   const pageCount = Math.floor(list.length / 10) + 1; // Calculate the total number of pages
