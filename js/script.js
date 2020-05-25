@@ -63,7 +63,7 @@ function appendPageLinks(list) {
     document.getElementsByClassName('noResults')[0].style.display = 'none';
   }
 
-  const pageCount = Math.floor(list.length / 10) + 1; // Calculate the total number of pages
+  const pageCount = list.length === 10 ? 1 : Math.floor(list.length / 10) + 1; // Calculate the total number of pages
 
   const newDiv = document.createElement('div'); // Generate .pagination DIV - Append to .page DIV
   newDiv.className = 'pagination';
